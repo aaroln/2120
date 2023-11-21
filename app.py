@@ -37,8 +37,7 @@ def get_value():
 
         result = {
             "Country": query,
-            "Cities": countryData,
-            "Global Mean": 
+            "Cities": countryData
         }
         return jsonify(result)
     return jsonify({"ERROR": "Country not found"}), 404
