@@ -7,14 +7,10 @@ import matplotlib as plt
 app = Flask(__name__)
 
 # Load Dataset
-dataPop = pd.read_csv('pop.csv')
+df = pd.read_csv('population.csv')
 dataOs = pd.read_csv('openSpace.csv')
 
-dataPopT = dataPop.transpose()
 
-newfile = 'population.csv'
-
-dataPopT.to_csv(newfile)
 
 '''
 @app.route("/")
