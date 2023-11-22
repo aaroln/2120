@@ -7,10 +7,20 @@ import matplotlib as plt
 app = Flask(__name__)
 
 # Load Dataset
-df = pd.read_csv('population.csv')
-dataOs = pd.read_csv('openSpace.csv')
+dfPop = pd.read_csv('population.csv')
+dfLandCover = pd.read_csv('landCover.csv')
+dfUrbanLand = pd.read_csv('urbanLand.csv')
+dfUrbanPop = pd.read_csv('urbanPop.csv')
 
 
+# Define the value you want to filter on
+desired_value = 'Artificial surfaces'
+
+# Filter rows based on the condition
+filtered_df = dfLandCover[dfLandCover['Land cover class'] == desired_value]
+
+# Save the filtered DataFrame to a new CSV file
+filtered_df.to_csv('filtered_file.csv', index=False)
 
 '''
 @app.route("/")
