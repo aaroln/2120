@@ -1,44 +1,31 @@
-import os
-import numpy as np 
-import matplotlib.pyplot as plt 
-from flask import Flask, render_template 
+from flask import Flask, send_file, render_template
+import io
+import base64
+from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
+import matplotlib.pyplot as plt
+import seaborn as sns
 
-# Flask constructor  
-app = Flask(__name__) 
+fig,ax = plt.subplots(figsize=(6,6))
+ax = sns.set_style(style="darkgrid")
 
-# Generate a scatter plot and returns the Figure and Axes objects
-def get_plot(): 
-    fig, ax = plt.subplots()
-    
-    data = { 
-        'a': np.arange(50), 
-        'c': np.random.randint(0, 50, 50), 
-        'd': np.random.randn(50) 
-    } 
-    data['b'] = data['a'] + 10 * np.random.randn(50) 
-    data['d'] = np.abs(data['d']) * 100
-    
-    ax.scatter(data['a'], data['b'], c=data['c'], s=data['d'])
-    ax.set_xlabel('X label') 
-    ax.set_ylabel('Y label') 
-    
-    return fig
+x=[i for i in range(100)]
+y=[i for i in range(100)]
 
-# Root URL 
-@app.route('/') 
-def single_converter(): 
-    # Get the matplotlib plot  
-    plot = get_plot() 
-    
-    # Save the figure in the static directory  
-    plot.savefig(os.path.join('static', 'images', 'plot.png')) 
-    
-    # Clear the plot to avoid memory issues
-    plt.close(plot)
-    
-    return render_template('index.html') 
 
-# Main Driver Function  
-if __name__ == '__main__': 
-    # Run the application on the local development server  
-    app.run(debug=True)
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return render_template('index.html')
+
+@app.route('/visualize')
+def visualize():
+    sns.lineplot(x,y)
+    img = io.BytesIO()
+    fig.savefig(img)
+    img.seek(0)
+    return send_file(img,mimetype='img/png')
+
+if __name__ == "__main__":
+    app.debug = True
+    app.run()
