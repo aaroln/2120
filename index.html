@@ -1,42 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Country Urban Data Search</title>
-</head>
-<body>
-<input type="text" id="search-input" placeholder="Enter country name">
-<button onclick="searchCountry()">Search</button>
-
-<div>
-  <h2>Results</h2>
-  <p><strong>Country:</strong><span id="Name">N/A</span></p>
-  <p><strong>Cities:</strong><span id="Data">N/A</span></p>
-  <p><strong>Country Mean:</strong><span id="Mean">N/A</span></p>
-</div>
-
-<script>
-  function searchCountry() {
-    const query = document.getElementById("search-input").value;
-    fetch('/search', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({query: query})
-    }).then(response => {
-      return response.json();
-    }).then(data => {
-      if (data.error) {
-        alert(data.error);
-      } else {
-        document.getElementById("Name").textContent = data["Country"];
-        document.getElementById("Data").textContent = data["Cities"];
-      }
-    });
-  }
-</script>
-
-</body>
+<!DOCTYPE html> 
+<html lang="en"> 
+  
+<head> 
+    <title>Matplotlib Plot</title> 
+</head> 
+  
+<body> 
+    <h1>How to Create Charts in Matplotlib with flask - Example 1</h1> 
+    <img src="{{ url_for('static', filename='images/plot.png') }}"> 
+</body> 
+  
 </html>

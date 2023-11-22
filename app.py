@@ -1,32 +1,33 @@
 # Imports
 import requests
-from flask import Flask, request, jsonify
+import io
+from flask import Flask, request, jsonify, Response, render_template
 import pandas as pd
-import matplotlib as plt
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
+import plotly.express as px
+from matplotlib.figure import Figure
 
 app = Flask(__name__)
 
-# Load Dataset
+# Load Datasets
 dfPop = pd.read_csv('population.csv')
 dfLandCover = pd.read_csv('landCover.csv')
 dfUrbanLand = pd.read_csv('urbanLand.csv')
 dfUrbanPop = pd.read_csv('urbanPop.csv')
 
-
-# Define the value you want to filter on
-desired_value = 'Artificial surfaces'
-
-# Filter rows based on the condition
-filtered_df = dfLandCover[dfLandCover['Land cover class'] == desired_value]
-
-# Save the filtered DataFrame to a new CSV file
-filtered_df.to_csv('filtered_file.csv', index=False)
-
-'''
 @app.route("/")
 def countryPop():
     query = request.json.get("query")
     
+@app.route('/plotPop.png')
+def plot_pngPop():
+    fig = create_figure()
+
+
+def create_figure():
+    fig = Figure()
+    axis   
     
 @app.route('/')
 def index():
@@ -34,4 +35,4 @@ def index():
 
 if __name__ == "__main__":
     app.run()
-'''
+
